@@ -1,0 +1,24 @@
+port: ":8080"
+basepath: ''
+installpath: '.'
+
+debug: true
+
+cors:
+  allowed_origins: "*"
+  allowed_methods: POST,GET,DELETE
+  allowed_headers: "X-Requested-With,Content-Type"
+  allowed_max_age: 1728000
+
+log:
+  consolelevel: debug
+  usefile: false
+  filelevel: debug
+  filepath: .
+  filemaxsize: 50
+  filemaxbackup: 3
+  filemaxage: 28
+
+caching:
+  default_ttl: 300
+  error_ttl: 2

@@ -1,0 +1,16 @@
+port: ":<port>"
+basepath: <basepath>
+installpath: <installpath>
+
+debug: <debug>
+version_prefixed_routes: <version_prefixed_routes>
+
+cors:
+  allowed_origins: "<cors_allowed_origins>"
+  allowed_methods: <cors_methods>
+  allowed_headers: "<cors_headers>"
+  allowed_max_age: <cors_max_age>
+
+caching:
+  default_ttl: 300
+  error_ttl: 2

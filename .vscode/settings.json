@@ -1,0 +1,24 @@
+{
+    "go.lintTool": "golint",
+    "go.useLanguageServer": true,
+    "go.languageServerExperimentalFeatures": {
+        "autoComplete": true,
+        "documentSymbols": true,
+        "findReferences": true,
+        "format": false,
+        "goToDefinition": true,
+        "goToTypeDefinition": true,
+        "hover": true,
+        "signatureHelp": true,
+        "rename": true,
+        "workspaceSymbols": true,
+        "diagnostics": true, // for diagnostics as you type
+       },
+    "go.toolsEnvVars": {
+        "GOBIN": "${workspaceRoot}/go/bin",
+    },
+    "restructuredtext.confPath": "${workspaceFolder}/docs",
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#016319"
+    }
+}
