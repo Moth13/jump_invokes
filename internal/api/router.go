@@ -77,4 +77,6 @@ func (r *Router) GinRoutesBinding() {
 	r.RouterGin.Handle("GET", "ping", endpoints.Ping(r.Env))
 	r.RouterGin.Handle("GET", "version", endpoints.GetVersion(r.Env))
 
+	// Users routes
+	r.RouterGin.Handle("GET", "users", endpoints.GetUsers(r.Env))
 }
