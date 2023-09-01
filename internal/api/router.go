@@ -3,6 +3,7 @@ package api
 import (
 	endpoints "invokes/internal/api/endpoints"
 	handlers "invokes/internal/api/handlers"
+	"invokes/internal/utils"
 	"strings"
 
 	docs "invokes/cmd/invokes/docs"
@@ -38,18 +39,13 @@ func (r *Router) Run() error {
 }
 
 func (r *Router) GinInitialize() {
-
-	log := logrus.New()
-
-	if !r.Env.Config.Debug {
+	if utils.Logger.GetLevel() <= logrus.WarnLevel {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	r.RouterGin = gin.New()
 
-	if r.Env.Config.Debug {
-		r.RouterGin.Use(ginlogrus.Logger(log), gin.Recovery())
-	}
+	r.RouterGin.Use(ginlogrus.Logger(utils.Logger), gin.Recovery())
 
 	r.GinRoutesBinding()
 }

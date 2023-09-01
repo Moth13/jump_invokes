@@ -19,7 +19,7 @@ import (
 // @Summary Post an invoice
 // @Description Post an invoice
 // @Produce application/json
-// @Success 204 {object}
+// @Success 200 {string} string "pong"
 // @Failure 500 {object} string "Internal server error"
 // @Router /invoice [post]
 func PostInvoice(e *handlers.Env) gin.HandlerFunc {

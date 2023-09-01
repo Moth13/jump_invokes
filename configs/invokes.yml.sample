@@ -1,8 +1,13 @@
 port: ":8080"
 basepath: ''
-installpath: '.'
 
-debug: true
+database:
+  engine: postgresql
+  connection_string: "postgres://login:pass@localhost:5433"
+  max_idle_conns: 10
+  max_open_conns: 30
+  conn_max_lifetime: 5
+  connection_retries_count: 3
 
 cors:
   allowed_origins: "*"

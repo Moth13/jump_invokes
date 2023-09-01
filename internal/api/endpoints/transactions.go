@@ -19,7 +19,7 @@ import (
 // @Summary Post an Transaction
 // @Description Post an Transaction
 // @Produce application/json
-// @Success 204 {object}
+// @Success 200 {string} string "pong"
 // @Failure 500 {object} string "Internal server error"
 // @Router /Transaction [post]
 func PostTransaction(e *handlers.Env) gin.HandlerFunc {

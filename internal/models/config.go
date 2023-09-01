@@ -4,11 +4,8 @@ import "time"
 
 // Config defines expected yaml structure for conf file.
 type Config struct {
-	Port                  string `yaml:"port"`
-	Debug                 bool   `yaml:"debug"`
-	VersionPrefixedRoutes bool   `yaml:"version_prefixed_routes"`
-	Installpath           string `yaml:"installpath"`
-	Basepath              string `yaml:"basepath"`
+	Port     string `yaml:"port"`
+	Basepath string `yaml:"basepath"`
 
 	DatabaseConfig struct {
 		Engine                 string        `yaml:"engine"`

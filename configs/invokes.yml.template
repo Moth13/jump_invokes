@@ -1,15 +1,28 @@
 port: ":<port>"
 basepath: <basepath>
-installpath: <installpath>
 
-debug: <debug>
-version_prefixed_routes: <version_prefixed_routes>
+database:
+  engine: <engine>
+  connection_string: "<conn_string>"
+  max_idle_conns: 10
+  max_open_conns: 30
+  conn_max_lifetime: 5
+  connection_retries_count: 3
 
 cors:
   allowed_origins: "<cors_allowed_origins>"
   allowed_methods: <cors_methods>
   allowed_headers: "<cors_headers>"
   allowed_max_age: <cors_max_age>
+
+log:
+  consolelevel: <log_consolelevel>
+  usefile: <log_usefile>
+  filelevel: <log_filelevel>
+  filepath: <log_filepath>
+  filemaxsize: <log_filemaxsize>
+  filemaxbackup: <log_filemaxbackup>
+  filemaxage: <log_filemaxage>
 
 caching:
   default_ttl: 300

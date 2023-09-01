@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    postgresql:
+        image: jump-database
+        container_name: postgresql
+        restart: always
+        ports:
+            - '5432:5432'
+
+    invokes:
+        image: invokes:0.0.0
+        container_name: invokes
+        depends_on:
+            - postgresql
+        ports:
+            - "8080:80"
+        links:
+            - postgresql:dbserver
+        environment:
+            DB_ENGINE: postgresql
+            DB_PROTO: postgres://
+            DB_USER: jump
+            DB_PASSWD: password
+            DB_PORT: 5432
+            DB_OPTS:
+            DB_NAME: 
+            DB_HOST: dbserver
+            LOG_LEVEL: error
+            CAT_CONF: "true"
