@@ -79,4 +79,8 @@ func (r *Router) GinRoutesBinding() {
 
 	// Users routes
 	r.RouterGin.Handle("GET", "users", endpoints.GetUsers(r.Env))
+
+	// Invoice routes
+	r.RouterGin.Handle("GET", "invoices", endpoints.GetInvoices(r.Env))
+	r.RouterGin.Handle("POST", "invoice", endpoints.PostInvoice(r.Env))
 }
