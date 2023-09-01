@@ -2,8 +2,8 @@ package api
 
 import (
 	handlers "invokes/internal/api/handlers"
-	"invokes/internal/config"
 	"invokes/internal/db"
+	models "invokes/internal/models"
 	"invokes/internal/utils"
 
 	"fmt"
@@ -13,8 +13,8 @@ import (
 )
 
 // LoadConfiguration loads a json config file into a Config struct.
-func LoadConfiguration(file *string) (config.Config, error) {
-	var config config.Config
+func LoadConfiguration(file *string) (models.Config, error) {
+	var config models.Config
 	configFile, err := ioutil.ReadFile(*file)
 	if err != nil {
 		return config, err
@@ -35,7 +35,7 @@ type App struct {
 	ErrorTTL   string
 }
 
-func (a *App) Initialize(config *config.Config) error {
+func (a *App) Initialize(config *models.Config) error {
 	err := a.DB.Initialize(config)
 	if err != nil {
 		return err

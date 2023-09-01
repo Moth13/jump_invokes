@@ -3,7 +3,6 @@ package api
 import (
 	endpoints "invokes/internal/api/endpoints"
 	handlers "invokes/internal/api/handlers"
-	"invokes/internal/utils"
 	"strings"
 
 	docs "invokes/cmd/invokes/docs"
@@ -72,7 +71,6 @@ func (r *Router) GinRoutesBinding() {
 
 	// Swagger
 	docs.SwaggerInfo.BasePath = r.Env.Config.Basepath
-	utils.Logger.Info(r.Env.Config)
 	r.RouterGin.Handle("GET", "/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// Default routes

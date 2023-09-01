@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"invokes/internal/config"
+	models "invokes/internal/models"
 	"path"
 
 	// "github.com/mattn/go-colorable"
@@ -13,7 +13,7 @@ type logger struct{ *logrus.Logger }
 
 var Logger *logger
 
-func NewLogger(config *config.Config) *logger {
+func NewLogger(config *models.Config) *logger {
 	level, err := logrus.ParseLevel(config.Log.ConsoleLevel)
 	if err != nil {
 		logrus.Fatalf("Failed to parse level (panic,fatal,error,warn,info,debug,trace): %v", err)

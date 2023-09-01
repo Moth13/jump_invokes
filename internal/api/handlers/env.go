@@ -3,10 +3,10 @@
 package env
 
 import (
-	"invokes/internal/config"
+	models "invokes/internal/models"
 )
 
 type Env struct {
-	Config  *config.Config
+	Config  *models.Config
 	Version string
 }

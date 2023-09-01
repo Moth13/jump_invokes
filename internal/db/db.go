@@ -1,7 +1,7 @@
 package db
 
 import (
-	"invokes/internal/config"
+	models "invokes/internal/models"
 	"invokes/internal/utils"
 	"time"
 
@@ -17,7 +17,7 @@ type Wrapper struct {
 }
 
 // Initialize create the associated db
-func (db *Wrapper) Initialize(config *config.Config) error {
+func (db *Wrapper) Initialize(config *models.Config) error {
 
 	var err error
 	switch config.DatabaseConfig.Engine {

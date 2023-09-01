@@ -1,22 +1,22 @@
 package utils
 
 import (
-	"invokes/internal/config"
+	models "invokes/internal/models"
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
 )
 
 // LoadLogger loads logger from a config struct
-func LoadLogger(config *config.Config) error {
+func LoadLogger(config *models.Config) error {
 	NewLogger(config)
 
 	return nil
 }
 
 // LoadConfiguration loads a yaml config file into a Config struct.
-func LoadConfiguration(file *string) (config.Config, error) {
-	var config config.Config
+func LoadConfiguration(file *string) (models.Config, error) {
+	var config models.Config
 	configFile, err := ioutil.ReadFile(*file)
 	if err != nil {
 		return config, err
