@@ -7,6 +7,7 @@ import (
 
 	gorm_logrus "github.com/onrik/gorm-logrus"
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -33,17 +34,23 @@ func (db *Wrapper) Initialize(config *models.Config) error {
 			Logger:                 gorm_logrus.New(),
 			SkipDefaultTransaction: true,
 		})
+	case "postgresql":
+		utils.Logger.Debugf("Creating postgresql at %s", config.DatabaseConfig.ConnectionString)
+		db.GormDB, err = gorm.Open(postgres.Open(config.DatabaseConfig.ConnectionString), &gorm.Config{
+			Logger:                 gorm_logrus.New(),
+			SkipDefaultTransaction: true,
+		})
 	default:
 		utils.Logger.Errorf("No database %s", config.DatabaseConfig.Engine)
 	}
 
 	if db.GormDB == nil {
-		utils.Logger.Errorf("1 Can't connect to %s due to %s", config.DatabaseConfig.ConnectionString, err)
+		utils.Logger.Errorf("Can't connect to %s due to %s", config.DatabaseConfig.ConnectionString, err)
 		return err
 	}
 
 	if err != nil {
-		utils.Logger.Errorf("2 Can't connect to %s due to %s", config.DatabaseConfig.ConnectionString, err)
+		utils.Logger.Errorf("Can't connect to %s due to %s", config.DatabaseConfig.ConnectionString, err)
 		return err
 	}
 

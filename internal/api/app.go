@@ -2,7 +2,6 @@ package api
 
 import (
 	handlers "invokes/internal/api/handlers"
-	"invokes/internal/db"
 	models "invokes/internal/models"
 	"invokes/internal/utils"
 
@@ -29,14 +28,13 @@ func LoadConfiguration(file *string) (models.Config, error) {
 type App struct {
 	Env    handlers.Env
 	Router Router
-	DB     db.Wrapper
 
 	DefaultTTL string
 	ErrorTTL   string
 }
 
 func (a *App) Initialize(config *models.Config) error {
-	err := a.DB.Initialize(config)
+	err := a.Env.DB.Initialize(config)
 	if err != nil {
 		return err
 	}
