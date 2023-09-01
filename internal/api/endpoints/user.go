@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// type Users = []*models.User
-
 // GetUsers godoc
 // @Tags users
 // @ID get-users

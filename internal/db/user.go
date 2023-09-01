@@ -8,7 +8,7 @@ import (
 func (db *Wrapper) GetUsers() ([]*models.User, int, error) {
 
 	var users []*models.User
-	result := db.GormDB.Find(&users)
+	result := db.GormDB.Order("id").Find(&users)
 
 	return users, len(users), result.Error
 }
