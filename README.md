@@ -112,13 +112,7 @@ It will launch the db and the service
 ## Unit testing
 
 ### Local testing
-
+You can launch some unit test by:
 ```zsh
-Todo
-```
-
-### Docker testing
-
-```zsh
-Todo
+go test -v invokes/internal/...
 ```

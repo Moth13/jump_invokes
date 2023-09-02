@@ -3,6 +3,7 @@ package utils
 import (
 	models "invokes/internal/models"
 	"io/ioutil"
+	"net/http"
 
 	"gopkg.in/yaml.v2"
 )
@@ -37,4 +38,33 @@ func Contains(slist []string, value string) bool {
 		}
 	}
 	return false
+}
+
+// Enum to define db error
+const (
+	InvalidContent = 100 // Error returned if data isn't correct
+	AlreadyExist   = 101 // Error returned when data already exist
+
+	InvoiceAlreadyPaid    = 200
+	InvoiceAmountNotFound = 201
+	InvoiceNotFound       = 203
+)
+
+// DBCodeToHTTPCode convert a db error code into the wanted http status code
+func DBCodeToHTTPCode(dbcode int) int {
+	httpcode := http.StatusNoContent
+	switch dbcode {
+	case InvoiceAlreadyPaid:
+		httpcode = http.StatusUnprocessableEntity
+	case InvoiceAmountNotFound:
+		httpcode = http.StatusBadRequest
+	case InvoiceNotFound:
+		httpcode = http.StatusNotFound
+	case InvalidContent:
+		httpcode = http.StatusBadRequest
+	case AlreadyExist:
+		httpcode = http.StatusConflict
+	default:
+	}
+	return httpcode
 }

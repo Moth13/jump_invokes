@@ -41,13 +41,7 @@ func PostInvoice(e *handlers.Env) gin.HandlerFunc {
 			httpcode = http.StatusInternalServerError
 			switch e := err.(type) {
 			case *db.DBError:
-				switch err.(*db.DBError).Type {
-				case db.InvalidContent:
-					httpcode = http.StatusBadRequest
-				case db.AlreadyExist:
-					httpcode = http.StatusConflict
-				default:
-				}
+				httpcode = utils.DBCodeToHTTPCode(err.(*db.DBError).Type)
 			default:
 				log.Println(e)
 			}

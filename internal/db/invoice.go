@@ -2,12 +2,13 @@ package db
 
 import (
 	models "invokes/internal/models"
+	"invokes/internal/utils"
 )
 
 // AddInvoice to add an invoice
 func (db *Wrapper) AddInvoice(invoice *models.Invoice) error {
 	if invoice == nil {
-		return &DBError{Msg: "invoice struct isn't valid", Type: InvalidContent}
+		return &DBError{Msg: "invoice struct isn't valid", Type: utils.InvalidContent}
 	}
 
 	invoice.Status = "pending"
@@ -22,7 +23,7 @@ func (db *Wrapper) AddInvoice(invoice *models.Invoice) error {
 
 	// Means already exist before ask to add
 	if result.RowsAffected == 0 {
-		return &DBError{Msg: "invoice already exists", Type: AlreadyExist}
+		return &DBError{Msg: "invoice already exists", Type: utils.AlreadyExist}
 	}
 	return nil
 }

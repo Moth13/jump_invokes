@@ -10,7 +10,7 @@ import (
 // AddTransaction to add an Transaction
 func (db *Wrapper) AddTransaction(transaction *models.Transaction) error {
 	if transaction == nil {
-		return &DBError{Msg: "transaction struct isn't valid", Type: InvalidContent}
+		return &DBError{Msg: "transaction struct isn't valid", Type: utils.InvalidContent}
 	}
 
 	invoice := models.Invoice{}
@@ -22,23 +22,30 @@ func (db *Wrapper) AddTransaction(transaction *models.Transaction) error {
 	// Means already exist before ask to add
 	if result.RowsAffected == 0 {
 		utils.Logger.Error("Invoice not found")
-		return &DBError{Msg: "Invoice not found", Type: InvoiceNotFound}
+		return &DBError{Msg: "Invoice not found", Type: utils.InvoiceNotFound}
 	}
 
+	if err := checkAndUpdateInvoice(&invoice, transaction); err != nil {
+		utils.Logger.Error("An error happend %s", err)
+		return err
+	}
+
+	db.GormDB.Session(&gorm.Session{FullSaveAssociations: true}).Save(&invoice)
+
+	return nil
+}
+
+func checkAndUpdateInvoice(invoice *models.Invoice, transaction *models.Transaction) error {
 	if invoice.Status == "paid" {
-		utils.Logger.Error("Invoice has already been paid")
-		return &DBError{Msg: "Invoice has already been paid", Type: InvoiceAlreadyPaid}
+		return &DBError{Msg: "Invoice has already been paid", Type: utils.InvoiceAlreadyPaid}
 	}
 
 	if invoice.Amount != transaction.Amount {
-		utils.Logger.Error("Invoice amount isn't the same")
-		return &DBError{Msg: "Invoice amount isn't the same", Type: InvoiceAmountNotFound}
+		return &DBError{Msg: "Invoice amount isn't the same", Type: utils.InvoiceAmountNotFound}
 	}
 
 	invoice.Status = "paid"
 	invoice.User.Balance += transaction.Amount
-
-	db.GormDB.Session(&gorm.Session{FullSaveAssociations: true}).Save(&invoice)
 
 	return nil
 }

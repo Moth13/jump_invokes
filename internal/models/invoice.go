@@ -45,6 +45,7 @@ func (i *Invoice) UnmarshalJSON(data []byte) error {
 	i.UserID = res.UserID
 	i.Label = res.Label
 	i.Amount = int32(res.AmountFloat * 100)
+	i.AmountFloat = res.AmountFloat
 
 	return nil
 }

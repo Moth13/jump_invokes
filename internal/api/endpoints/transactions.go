@@ -41,15 +41,7 @@ func PostTransaction(e *handlers.Env) gin.HandlerFunc {
 			httpcode = http.StatusInternalServerError
 			switch e := err.(type) {
 			case *db.DBError:
-				switch err.(*db.DBError).Type {
-				case db.InvoiceAlreadyPaid:
-					httpcode = http.StatusUnprocessableEntity
-				case db.InvoiceAmountNotFound:
-					httpcode = http.StatusBadRequest
-				case db.InvoiceNotFound:
-					httpcode = http.StatusNotFound
-				default:
-				}
+				httpcode = utils.DBCodeToHTTPCode(err.(*db.DBError).Type)
 			default:
 				log.Println(e)
 			}
