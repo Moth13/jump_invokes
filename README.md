@@ -20,6 +20,10 @@ During its development, I've encountered no specific difficulties. I've started 
 
 In order to be sure all consigns are checked, a complete unit test suite has been added.
 
+The only concern I might have about the exercice is about the POST transaction, as the invoice.ID isn't given when a new invoice is POST, I guess the user of the API has to guess it to pass it to the POST transation endpoint. To help I've added a GET invoices endpoint to get all the registered invoices.
+
+Or maybye invoice.Label should be the same as transaction.reference. It would have been the question I'd asked in the feature ticket before confirmed it and start to work on this feature in a work environment.
+
 ## Setup 
 
 ### Get the code
