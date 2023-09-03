@@ -29,7 +29,6 @@ func TestInvoiceToJSON(t *testing.T) {
 }
 
 // TestTransactionToJSON to test an unmarshalling of an incoming transaction
-
 func TestTransactionToJSON(t *testing.T) {
 	invoice := Transaction{InvoiceID: 1, Reference: "JMPINV200220117", Amount: 9745, AmountFloat: 97.45}
 
