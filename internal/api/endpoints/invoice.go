@@ -16,7 +16,7 @@ import (
 )
 
 type PostInvoiceResponse struct {
-	Msg       string `json:"invoice_id"`
+	Msg       string `json:"msg"`
 	InvoiceID int    `json:"invoice_id"`
 }
 

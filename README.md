@@ -48,6 +48,12 @@ go mod tidy
 go build -o invokes -ldflags -s invokes/cmd/invokes
 ```
 
+if build failed with some missing dependencies despite the `go mod tidy`: 
+```zsh
+go get github.com/gin-contrib/cors github.com/gin-gonic/gin github.com/gin-gonic/gin/binding github.com/onrik/gorm-logrus github.com/sirupsen/logrus github.com/snowzach/rotatefilehook github.com/swaggo/files github.com/swaggo/gin-swagger github.com/swaggo/swag github.com/toorop/gin-logrus gopkg.in/yaml.v2 gorm.io/driver/mysql gorm.io/driver/postgres gorm.io/driver/sqlite gorm.io/gorm github.com/stretchr/testify/assert
+```
+
+
 ### Swag generation
 Swagger documention can be generated using swaggo.
 See [swaggo](https://github.com/swaggo/swag) for installation
