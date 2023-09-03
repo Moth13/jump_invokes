@@ -26,7 +26,7 @@ func (db *Wrapper) AddTransaction(transaction *models.Transaction) error {
 	}
 
 	if err := checkAndUpdateInvoice(&invoice, transaction); err != nil {
-		utils.Logger.Error("An error happend %s", err)
+		utils.Logger.Error("An error happened", err)
 		return err
 	}
 
@@ -37,12 +37,12 @@ func (db *Wrapper) AddTransaction(transaction *models.Transaction) error {
 
 // checkAndUpdateInvoice check invoice according to transaction, update it if can
 func checkAndUpdateInvoice(invoice *models.Invoice, transaction *models.Transaction) error {
-	if invoice.Status == "paid" {
-		return &DBError{Msg: "Invoice has already been paid", Type: utils.InvoiceAlreadyPaid}
-	}
-
 	if invoice.Amount != transaction.Amount {
 		return &DBError{Msg: "Invoice amount isn't the same", Type: utils.InvoiceAmountNotFound}
+	}
+
+	if invoice.Status == "paid" {
+		return &DBError{Msg: "Invoice has already been paid", Type: utils.InvoiceAlreadyPaid}
 	}
 
 	invoice.Status = "paid"
