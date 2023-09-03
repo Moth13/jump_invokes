@@ -34,6 +34,12 @@ git clone https://github.com/Moth13/jump_invokes.git
 
 A kanban can be found at [Invokes Kaban](https://github.com/users/Moth13/projects/1/views/1)
 
+### Configuration
+
+```zsh
+go mod download
+```
+
 ## Local usage
 
 ### Build
@@ -42,7 +48,7 @@ A kanban can be found at [Invokes Kaban](https://github.com/users/Moth13/project
 go build -o invokes -ldflags -s invokes/cmd/invokes
 ```
 
-if build failed with some missing dependencies despite the `go mod tidy`: 
+if build failed with some missing dependencies despite the `go mod download`: 
 ```zsh
 go get github.com/gin-contrib/cors github.com/gin-gonic/gin github.com/gin-gonic/gin/binding github.com/onrik/gorm-logrus github.com/sirupsen/logrus github.com/snowzach/rotatefilehook github.com/swaggo/files github.com/swaggo/gin-swagger github.com/swaggo/swag github.com/toorop/gin-logrus gopkg.in/yaml.v2 gorm.io/driver/mysql gorm.io/driver/postgres gorm.io/driver/sqlite gorm.io/gorm github.com/stretchr/testify/assert
 ```
