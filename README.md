@@ -34,12 +34,6 @@ git clone https://github.com/Moth13/jump_invokes.git
 
 A kanban can be found at [Invokes Kaban](https://github.com/users/Moth13/projects/1/views/1)
 
-### Configuration
-
-```zsh
-go mod tidy
-```
-
 ## Local usage
 
 ### Build
