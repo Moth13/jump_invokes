@@ -5,8 +5,6 @@ A rest api to handle users and invokes
 ## Introduction
 This micro service has been developped to show my capacties in the goland development.
 
-It is based on a boilerplate I've done since I coded some RestAPI in the past.
-
 I choose to use gin as HTTP web framework, for its perfomance, easiness and capacities.
 For the database part, I choose gorm as it handles easily all databases, very pratical to use.
 
