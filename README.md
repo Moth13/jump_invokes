@@ -134,6 +134,17 @@ As said, a swagger is integrated. Don't forget to generate it in case of local b
 
 It will be accessible at `{your_base_url}:{your_port}/docs/index.html`
 
+## Endpoints
+Following endpoints are available:
+- GET `{your_base_url}:{your_port}/ping`
+- GET `{your_base_url}:{your_port}/version`
+- GET `{your_base_url}:{your_port}/users`
+- GET `{your_base_url}:{your_port}/invoices`
+- POST `{your_base_url}:{your_port}/invoice`
+- POST `{your_base_url}:{your_port}/transaction`
+
+And the swagger as mentionned earlier.
+
 ## To be done
 
 Future development can include some securities tools (JWT token, maybye ory/keto usage on the deployment steps).
