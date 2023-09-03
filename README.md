@@ -66,7 +66,7 @@ go get github.com/gin-contrib/cors github.com/gin-gonic/gin github.com/gin-gonic
 ### Configuration file
 You can find a configuration file sample and a template into the config directory.
 The template file is used by the docker usage during the docker image build.
-see [config/invokes.yml.sample](config/invokes.yml.sample) for more info
+see [config/invokes.yml.sample](./configs/invokes.yml.sample) for more info
 
 
 ### Launch
@@ -129,3 +129,9 @@ go test -v invokes/internal/...
 As said, a swagger is integrated. Don't forget to generate it in case of local build.
 
 It will be accessible at `{your_base_url}:{your_port}/docs/index.html`
+
+## To be done
+
+Future development can include some securities tools (JWT token, maybye ory/keto usage on the deployment steps).
+
+Integration into a helm chart and an ansible tool should be done too.
