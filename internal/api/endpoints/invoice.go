@@ -26,7 +26,10 @@ type PostInvoiceResponse struct {
 // @Summary Post an invoice
 // @Description Post an invoice
 // @Produce application/json
-// @Success 200 {string} string "pong"
+// @Success 204 {string} string ""
+// @Failure 400 {string} string "Invalid post parameters"
+// @Failure 404 {string} string "No invoice found"
+// @Failure 422 {string} string "Invoice already paid"
 // @Failure 500 {object} string "Internal server error"
 // @Router /invoice [post]
 func PostInvoice(e *handlers.Env) gin.HandlerFunc {
@@ -64,34 +67,38 @@ func PostInvoice(e *handlers.Env) gin.HandlerFunc {
 }
 
 // GetInvoices godoc
-// @Tags Invoices
-// @ID get-Invoices
+// @Tags invoice
+// @ID get-invoices
 // @Summary Get a list of Invoices
 // @Description Retreive a list of Invoices
 // @Produce application/json
+// @Param invoice_id query int false "invoice id"
+// @Param user_id query int false "invoice user id"
+// @Param amount query string false "invoice amount"
+// @Param label query string false "invoice label"
 // @Success 200 {object} models.Invoices
 // @Failure 204 {object} string "No content found"
+// @Failure 400 {string} string "Invalid post parameters"
 // @Failure 500 {object} string "Internal server error"
 // @Router /Invoices [get]
-// @x-codeSamples [{"lang":"Shell","label":"cURL","source":"curl --include \\\n     --header \"Content-type: application/json\" \\\n     -X GET \"{server_url}/Invoices\"\n"},{"lang":"Python","source":"import requests\nh = {\n  \"Content-type\": \"application/json\"\n}\np = {}\nresp = requests.get(\"{server_url}/Invoices\", params=p, headers=h)\n"},{"lang":"JavaScript","source":"var request = require('request');\nrequest({\n  method: 'GET',\n  url: '{server_url}/Invoices',\n  headers: {\n    'Content-Type': 'application/json',\n  }}, function (error, response, body) {\n  console.log('Status:', response.statusCode);\n  console.log('Headers:', JSON.stringify(response.headers));\n  console.log('Response:', body);\n});\n"}]
 func GetInvoices(e *handlers.Env) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		filter := models.Invoice{}
-		invoice_id := c.DefaultQuery("invoice_id", "")
-		user_id := c.DefaultQuery("user_id", "")
+		invoiceID := c.DefaultQuery("invoice_id", "")
+		userID := c.DefaultQuery("user_id", "")
 		amount := c.DefaultQuery("amount", "")
 		label := c.DefaultQuery("label", "")
-		if invoice_id != "" {
-			if iid, err := strconv.Atoi(invoice_id); err == nil {
+		if invoiceID != "" {
+			if iid, err := strconv.Atoi(invoiceID); err == nil {
 				filter.ID = iid
 			} else {
 				c.JSON(http.StatusBadRequest, "Invalid invoice_id format")
 				return
 			}
 		}
-		if user_id != "" {
-			if uid, err := strconv.Atoi(user_id); err == nil {
+		if userID != "" {
+			if uid, err := strconv.Atoi(userID); err == nil {
 				filter.UserID = uid
 			} else {
 				c.JSON(http.StatusBadRequest, "Invalid user_id format")

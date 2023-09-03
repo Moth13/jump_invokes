@@ -5,17 +5,20 @@ A rest api to handle users and invokes
 ## Introduction
 This micro service has been developped to show my capacties in the goland development.
 
-It is based on a boilerplate I've done since I've coded some RestAPI in the past.
+It is based on a boilerplate I've done since I coded some RestAPI in the past.
 
 I choose to use gin as HTTP web framework, for its perfomance, easiness and capacities.
 For the database part, I choose gorm as it handles easily all databases, very pratical to use.
 
 ### Though on the coding
-Router class is here as a wrapper, gin can be easily swith to mux if wanted.
+Router class is here as a wrapper, gin can be easily switch to mux if wanted.
 
-Code has been cut in logical directory for convenience.
+Code has been cut in logical directory for convenience 
+(all models and struct in models, db code into a db directory).
 
 During its development, I've encountered no specific difficulties. I've started by filling the kanban with the task I've thought, then follow the tasks' order I've set.
+
+In order to be sure all consigns are checked, a complete unit test suite has been added.
 
 ## Setup 
 
@@ -91,7 +94,7 @@ The docker image has some env variables to make it configurable
 ```zsh
 DB_ENGINE: postgresql // can be mysql, postgresql
 DB_PROTO: postgres:// //postgres://, mysql+pymysql://
-DB_USER: jump
+DB_USER: login
 DB_PASSWD: password
 DB_PORT: 5432
 DB_OPTS:
@@ -111,7 +114,6 @@ It will launch the db and the service
 
 ## Unit testing
 
-### Local testing
 You can launch some unit test by:
 ```zsh
 go test -v invokes/internal/...

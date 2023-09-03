@@ -25,6 +25,7 @@ func LoadConfiguration(file *string) (models.Config, error) {
 	return config, nil
 }
 
+// App struct describes the application
 type App struct {
 	Env    handlers.Env
 	Router Router
@@ -33,6 +34,7 @@ type App struct {
 	ErrorTTL   string
 }
 
+// Initialize configure the app
 func (a *App) Initialize(config *models.Config) error {
 	err := a.Env.DB.Initialize(config)
 	if err != nil {

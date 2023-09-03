@@ -27,7 +27,7 @@ func (i *Transaction) AfterFind(tx *gorm.DB) (err error) {
 	return
 }
 
-// UnmarshalJSON overload to handle float to int convertion
+// UnmarshalJSON overload to handle float to int conversion
 func (i *Transaction) UnmarshalJSON(data []byte) error {
 	var res TransactionJSON
 

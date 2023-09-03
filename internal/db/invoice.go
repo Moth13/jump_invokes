@@ -3,6 +3,8 @@ package db
 import (
 	models "invokes/internal/models"
 	"invokes/internal/utils"
+
+	"gorm.io/gorm"
 )
 
 // AddInvoice to add an invoice
@@ -13,13 +15,22 @@ func (db *Wrapper) AddInvoice(invoice *models.Invoice) error {
 
 	invoice.Status = "pending"
 
+	userwhereparams := models.User{UserID: invoice.UserID}
+	user := models.User{UserID: invoice.UserID}
+	result := db.GormDB.Where(&userwhereparams).First(&user)
+
+	if result.Error == gorm.ErrRecordNotFound {
+		utils.Logger.Error("User not found")
+		return &DBError{Msg: "unkwnown user", Type: utils.UserNotFound}
+	}
+
 	newinvoice := models.Invoice{}
 	whereparams := models.Invoice{
 		UserID: invoice.UserID,
 		Label:  invoice.Label,
 		Amount: invoice.Amount,
 	}
-	result := db.GormDB.Where(&whereparams).FirstOrCreate(&newinvoice, invoice)
+	result = db.GormDB.Where(&whereparams).FirstOrCreate(&newinvoice, invoice)
 
 	if result.Error != nil {
 		return &DBError{Msg: result.Error.Error(), Type: utils.InvalidParams}

@@ -45,6 +45,7 @@ const (
 	InvalidContent = 100 // Error returned if data isn't correct
 	AlreadyExist   = 101 // Error returned when data already exist
 	InvalidParams  = 102
+	UserNotFound   = 103
 
 	InvoiceAlreadyPaid    = 200
 	InvoiceAmountNotFound = 201
@@ -67,6 +68,8 @@ func DBCodeToHTTPCode(dbcode int) int {
 		httpcode = http.StatusBadRequest
 	case AlreadyExist:
 		httpcode = http.StatusConflict
+	case UserNotFound:
+		httpcode = http.StatusBadRequest
 	default:
 	}
 	return httpcode

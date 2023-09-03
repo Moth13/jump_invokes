@@ -33,4 +33,5 @@ func TestDBCodeConverter(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, DBCodeToHTTPCode(InvoiceNotFound))
 	assert.Equal(t, http.StatusBadRequest, DBCodeToHTTPCode(InvalidContent))
 	assert.Equal(t, http.StatusConflict, DBCodeToHTTPCode(AlreadyExist))
+	assert.Equal(t, http.StatusBadRequest, DBCodeToHTTPCode(UserNotFound))
 }

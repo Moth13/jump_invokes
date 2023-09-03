@@ -15,12 +15,15 @@ import (
 )
 
 // PostTransaction godoc
-// @Tags Transaction
-// @ID post-Transaction
+// @Tags transaction
+// @ID post-transaction
 // @Summary Post an Transaction
 // @Description Post an Transaction
 // @Produce application/json
-// @Success 200 {string} string "pong"
+// @Success 204 {string} string ""
+// @Failure 400 {string} string "Invalid post parameters"
+// @Failure 404 {string} string "No invoice found"
+// @Failure 409 {string} string "Invoice already exist"
 // @Failure 500 {object} string "Internal server error"
 // @Router /Transaction [post]
 func PostTransaction(e *handlers.Env) gin.HandlerFunc {

@@ -11,26 +11,30 @@ import (
 )
 
 // GetUsers godoc
-// @Tags users
+// @Tags user
 // @ID get-users
 // @Summary Get a list of users
 // @Description Retreive a list of users
 // @Produce application/json
+// @Param user_id query int false "user id"
+// @Param balance query string false "user balance"
+// @Param first_name query string false "user first name"
+// @Param last_name query string false "user last name"
 // @Success 200 {object} models.Users
-// @Failure 204 {object} string "No content found"
+// @Failure 204 {string} string "No content found"
+// @Failure 400 {string} string "Invalid request parameters"
 // @Failure 500 {object} string "Internal server error"
 // @Router /users [get]
-// @x-codeSamples [{"lang":"Shell","label":"cURL","source":"curl --include \\\n     --header \"Content-type: application/json\" \\\n     -X GET \"{server_url}/users\"\n"},{"lang":"Python","source":"import requests\nh = {\n  \"Content-type\": \"application/json\"\n}\np = {}\nresp = requests.get(\"{server_url}/users\", params=p, headers=h)\n"},{"lang":"JavaScript","source":"var request = require('request');\nrequest({\n  method: 'GET',\n  url: '{server_url}/users',\n  headers: {\n    'Content-Type': 'application/json',\n  }}, function (error, response, body) {\n  console.log('Status:', response.statusCode);\n  console.log('Headers:', JSON.stringify(response.headers));\n  console.log('Response:', body);\n});\n"}]
 func GetUsers(e *handlers.Env) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		filter := models.User{}
-		user_id := c.DefaultQuery("user_id", "")
+		userID := c.DefaultQuery("user_id", "")
 		balance := c.DefaultQuery("balance", "")
-		first_name := c.DefaultQuery("first_name", "")
-		last_name := c.DefaultQuery("last_name", "")
-		if user_id != "" {
-			if uid, err := strconv.Atoi(user_id); err == nil {
+		firstName := c.DefaultQuery("first_name", "")
+		lastName := c.DefaultQuery("last_name", "")
+		if userID != "" {
+			if uid, err := strconv.Atoi(userID); err == nil {
 				filter.UserID = uid
 			} else {
 				c.JSON(http.StatusBadRequest, "Invalid user_id format")
@@ -45,11 +49,11 @@ func GetUsers(e *handlers.Env) gin.HandlerFunc {
 				return
 			}
 		}
-		if first_name != "" {
-			filter.FirstName = first_name
+		if firstName != "" {
+			filter.FirstName = firstName
 		}
-		if last_name != "" {
-			filter.LastName = last_name
+		if lastName != "" {
+			filter.LastName = lastName
 		}
 		users, count, err := e.DB.GetUsers(&filter)
 

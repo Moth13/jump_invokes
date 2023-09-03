@@ -35,6 +35,7 @@ func (db *Wrapper) AddTransaction(transaction *models.Transaction) error {
 	return nil
 }
 
+// checkAndUpdateInvoice check invoice according to transaction, update it if can
 func checkAndUpdateInvoice(invoice *models.Invoice, transaction *models.Transaction) error {
 	if invoice.Status == "paid" {
 		return &DBError{Msg: "Invoice has already been paid", Type: utils.InvoiceAlreadyPaid}
