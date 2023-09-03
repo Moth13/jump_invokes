@@ -10,7 +10,7 @@ import (
 
 // TestCheckAndUpdateInvoice to test the function TestCheckAndUpdateInvoice
 func TestCheckAndUpdateInvoice(t *testing.T) {
-	user := models.User{UserID: 1, FirstName: "John", LastName: "Doe", Balance: 19255, BalanceJSON: 192.55}
+	user := models.User{UserID: 1, FirstName: "John", LastName: "Doe", Balance: 19255, BalanceFloat: 192.55}
 	invoice := models.Invoice{ID: 1, UserID: 1, Label: "test_invoice", Amount: 9745, AmountFloat: 97.45, User: user, Status: "pending"}
 	transaction := models.Transaction{InvoiceID: 1, Reference: "JMPINV200220117", Amount: 9645, AmountFloat: 96.45}
 

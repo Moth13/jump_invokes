@@ -19,7 +19,11 @@ func (db *Wrapper) AddInvoice(invoice *models.Invoice) error {
 		Label:  invoice.Label,
 		Amount: invoice.Amount,
 	}
-	result := db.GormDB.Where(&whereparams).Assign(invoice).FirstOrCreate(&newinvoice)
+	result := db.GormDB.Where(&whereparams).FirstOrCreate(&newinvoice, invoice)
+
+	if result.Error != nil {
+		return &DBError{Msg: result.Error.Error(), Type: utils.InvalidParams}
+	}
 
 	// Means already exist before ask to add
 	if result.RowsAffected == 0 {
@@ -29,10 +33,13 @@ func (db *Wrapper) AddInvoice(invoice *models.Invoice) error {
 }
 
 // GetInvoices returns the list of Invoices
-func (db *Wrapper) GetInvoices() ([]*models.Invoice, int, error) {
-
+func (db *Wrapper) GetInvoices(filter *models.Invoice) ([]*models.Invoice, int, error) {
 	var invoices []*models.Invoice
-	result := db.GormDB.Order("id").Find(&invoices)
+	query := db.GormDB
+	if filter != nil {
+		query = query.Where(filter)
+	}
+	result := query.Order("id").Find(&invoices)
 
 	return invoices, len(invoices), result.Error
 }

@@ -3,7 +3,9 @@ package endpoints
 import (
 	"fmt"
 	handlers "invokes/internal/api/handlers"
+	"invokes/internal/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +24,34 @@ import (
 func GetUsers(e *handlers.Env) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
-		users, count, err := e.DB.GetUsers()
+		filter := models.User{}
+		user_id := c.DefaultQuery("user_id", "")
+		balance := c.DefaultQuery("balance", "")
+		first_name := c.DefaultQuery("first_name", "")
+		last_name := c.DefaultQuery("last_name", "")
+		if user_id != "" {
+			if uid, err := strconv.Atoi(user_id); err == nil {
+				filter.UserID = uid
+			} else {
+				c.JSON(http.StatusBadRequest, "Invalid user_id format")
+				return
+			}
+		}
+		if balance != "" {
+			if a, err := strconv.ParseFloat(balance, 64); err == nil {
+				filter.Balance = int32(a * 100)
+			} else {
+				c.JSON(http.StatusBadRequest, "Invalid balance format")
+				return
+			}
+		}
+		if first_name != "" {
+			filter.FirstName = first_name
+		}
+		if last_name != "" {
+			filter.LastName = last_name
+		}
+		users, count, err := e.DB.GetUsers(&filter)
 
 		// If encounter an error, failed it
 		if err != nil {

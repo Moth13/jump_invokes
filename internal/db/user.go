@@ -5,10 +5,14 @@ import (
 )
 
 // GetUsers returns the list of users
-func (db *Wrapper) GetUsers() ([]*models.User, int, error) {
+func (db *Wrapper) GetUsers(filter *models.User) ([]*models.User, int, error) {
 
 	var users []*models.User
-	result := db.GormDB.Order("id").Find(&users)
+	query := db.GormDB
+	if filter != nil {
+		query = query.Where(filter)
+	}
+	result := query.Order("id").Find(&users)
 
 	return users, len(users), result.Error
 }

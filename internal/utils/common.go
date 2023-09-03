@@ -44,6 +44,7 @@ func Contains(slist []string, value string) bool {
 const (
 	InvalidContent = 100 // Error returned if data isn't correct
 	AlreadyExist   = 101 // Error returned when data already exist
+	InvalidParams  = 102
 
 	InvoiceAlreadyPaid    = 200
 	InvoiceAmountNotFound = 201
@@ -60,6 +61,8 @@ func DBCodeToHTTPCode(dbcode int) int {
 		httpcode = http.StatusBadRequest
 	case InvoiceNotFound:
 		httpcode = http.StatusNotFound
+	case InvalidParams:
+		httpcode = http.StatusBadRequest
 	case InvalidContent:
 		httpcode = http.StatusBadRequest
 	case AlreadyExist:

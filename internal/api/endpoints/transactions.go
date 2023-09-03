@@ -7,6 +7,7 @@ import (
 	"invokes/internal/models"
 	"invokes/internal/utils"
 	"log"
+	"math"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -26,17 +27,22 @@ func PostTransaction(e *handlers.Env) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		Transaction := models.Transaction{}
+		transaction := models.Transaction{}
 
-		if err := c.ShouldBindBodyWith(&Transaction, binding.JSON); err != nil {
+		if err := c.ShouldBindBodyWith(&transaction, binding.JSON); err != nil {
 			utils.Logger.Info(err)
 			c.JSON(http.StatusInternalServerError, fmt.Sprintf("Error %s", err))
 			return
 		}
 
+		if transaction.AmountFloat != math.Floor(transaction.AmountFloat*100)/100 {
+			c.JSON(http.StatusBadRequest, "Incorrect Amount floor value, has to be in 2 decimals")
+			return
+		}
+
 		httpcode := http.StatusNoContent
 		msg := ""
-		err := e.DB.AddTransaction(&Transaction)
+		err := e.DB.AddTransaction(&transaction)
 		if err != nil {
 			httpcode = http.StatusInternalServerError
 			switch e := err.(type) {

@@ -7,11 +7,18 @@ import (
 	"invokes/internal/models"
 	"invokes/internal/utils"
 	"log"
+	"math"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
+
+type PostInvoiceResponse struct {
+	Msg       string `json:"invoice_id"`
+	InvoiceID int    `json:"invoice_id"`
+}
 
 // PostInvoice godoc
 // @Tags invoice
@@ -30,7 +37,12 @@ func PostInvoice(e *handlers.Env) gin.HandlerFunc {
 
 		if err := c.ShouldBindBodyWith(&invoice, binding.JSON); err != nil {
 			utils.Logger.Info(err)
-			c.JSON(http.StatusInternalServerError, fmt.Sprintf("err %s", err))
+			c.JSON(http.StatusBadRequest, fmt.Sprintf("err %s", err))
+			return
+		}
+
+		if invoice.AmountFloat != math.Floor(invoice.AmountFloat*100)/100 {
+			c.JSON(http.StatusBadRequest, "Incorrect Amount floor value, has to be in 2 decimals")
 			return
 		}
 
@@ -47,7 +59,6 @@ func PostInvoice(e *handlers.Env) gin.HandlerFunc {
 			}
 			msg = fmt.Sprintf("Error %s", err)
 		}
-
 		c.JSON(httpcode, msg)
 	}
 }
@@ -66,7 +77,40 @@ func PostInvoice(e *handlers.Env) gin.HandlerFunc {
 func GetInvoices(e *handlers.Env) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
-		invoices, count, err := e.DB.GetInvoices()
+		filter := models.Invoice{}
+		invoice_id := c.DefaultQuery("invoice_id", "")
+		user_id := c.DefaultQuery("user_id", "")
+		amount := c.DefaultQuery("amount", "")
+		label := c.DefaultQuery("label", "")
+		if invoice_id != "" {
+			if iid, err := strconv.Atoi(invoice_id); err == nil {
+				filter.ID = iid
+			} else {
+				c.JSON(http.StatusBadRequest, "Invalid invoice_id format")
+				return
+			}
+		}
+		if user_id != "" {
+			if uid, err := strconv.Atoi(user_id); err == nil {
+				filter.UserID = uid
+			} else {
+				c.JSON(http.StatusBadRequest, "Invalid user_id format")
+				return
+			}
+		}
+		if amount != "" {
+			if a, err := strconv.ParseFloat(amount, 64); err == nil {
+				filter.Amount = int32(a * 100)
+			} else {
+				c.JSON(http.StatusBadRequest, "Invalid amount format")
+				return
+			}
+		}
+		if label != "" {
+			filter.Label = label
+		}
+
+		invoices, count, err := e.DB.GetInvoices(&filter)
 
 		// If encounter an error, failed it
 		if err != nil {

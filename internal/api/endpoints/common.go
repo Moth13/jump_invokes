@@ -25,7 +25,7 @@ func Ping(e *handlers.Env) gin.HandlerFunc {
 
 // VersionStruct to return application version
 type VersionStruct struct {
-	Version string `example:"9.17.84" json:"api_version"`
+	Version string `example:"9.17.84" json:"version"`
 }
 
 // GetVersion godoc
