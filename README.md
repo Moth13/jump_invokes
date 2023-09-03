@@ -42,8 +42,17 @@ go mod download
 
 ## Local usage
 
-### Build
+### Swagger generation
+Swagger documention can be generated using swaggo.
+See [swaggo](https://github.com/swaggo/swag) for installation
 
+Note that in docker usage, swagger generation is automatised.
+
+```
+swag init -o cmd/invokes/docs -d cmd/invokes,internal -g main.go
+```
+### Build
+Note that the swagger generation is mandatory for the build to work.
 ```zsh
 go build -o invokes -ldflags -s invokes/cmd/invokes
 ```
@@ -53,16 +62,6 @@ if build failed with some missing dependencies despite the `go mod download`:
 go get github.com/gin-contrib/cors github.com/gin-gonic/gin github.com/gin-gonic/gin/binding github.com/onrik/gorm-logrus github.com/sirupsen/logrus github.com/snowzach/rotatefilehook github.com/swaggo/files github.com/swaggo/gin-swagger github.com/swaggo/swag github.com/toorop/gin-logrus gopkg.in/yaml.v2 gorm.io/driver/mysql gorm.io/driver/postgres gorm.io/driver/sqlite gorm.io/gorm github.com/stretchr/testify/assert
 ```
 
-
-### Swag generation
-Swagger documention can be generated using swaggo.
-See [swaggo](https://github.com/swaggo/swag) for installation
-
-Note that in docker usage, swagger generation is automatised.
-
-```
-swag init -o cmd/invokes/docs -d cmd/invokes,internal -g main.go
-```
 
 ### Configuration file
 You can find a configuration file sample and a template into the config directory.
@@ -113,7 +112,7 @@ CAT_CONF: "true" // true to display the config at boot
 ### Docker-Compose
 A docker-compose file is available in the deployment directory
 ```zsh
-docker-compose -f deployment/docker-compose.yml
+docker-compose -f deployment/docker-compose.yml up
 ```
 It will launch the db and the service
 
@@ -124,3 +123,9 @@ You can launch some unit test by:
 ```zsh
 go test -v invokes/internal/...
 ```
+
+## Swagger
+
+As said, a swagger is integrated. Don't forget to generate it in case of local build.
+
+It will be accessible at `{your_base_url}:{your_port}/docs/index.html`
