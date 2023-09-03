@@ -2,3 +2,4 @@ invokes
 cmd/invokes/doc*
 configs/invokes.yml
 go
+go.sum
